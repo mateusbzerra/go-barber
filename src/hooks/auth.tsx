@@ -4,6 +4,7 @@ import api from '../services/api';
 interface AuthContextProps {
   user: object;
   signIn(credentials: SignInForm): Promise<void>;
+  signOut(): void;
 }
 interface SignInForm {
   email: string;
@@ -31,9 +32,14 @@ const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@GoBarber:user', JSON.stringify(user));
     setData({ token, user });
   }, []);
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@GoBarber:token');
+    localStorage.removeItem('@GoBarber:user');
+    setData({} as AuthState);
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn }}>
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
