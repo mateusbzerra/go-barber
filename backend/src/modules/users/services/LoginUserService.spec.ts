@@ -40,7 +40,7 @@ describe('LoginUser', () => {
       fakeUsersRepository,
       fakeHashProvider,
     );
-    expect(
+    await expect(
       loginUserService.execute({
         email: 'johndoe@example.com',
         password: '123456',
@@ -66,14 +66,14 @@ describe('LoginUser', () => {
       password: '123456',
     });
 
-    expect(
+    await expect(
       loginUserService.execute({
         email: 'wrong-email@example.com',
         password: '123456',
       }),
     ).rejects.toBeInstanceOf(AppError);
 
-    expect(
+    await expect(
       loginUserService.execute({
         email: 'johndoe@example.com',
         password: 'wrong-password',
