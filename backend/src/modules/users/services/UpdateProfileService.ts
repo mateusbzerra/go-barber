@@ -37,14 +37,25 @@ export default class UpdateProfile {
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
       throw new AppError('Email already used by another user');
     }
+    Object.assign(user, { name, email });
+    if (password && !old_password) {
+      throw new AppError('The old password was not provided');
+    }
 
-    if (password) {
+    if (password && old_password) {
+      const checkOldPassword = await this.hashProvider.compareHash(
+        old_password,
+        user.password,
+      );
+      if (!checkOldPassword) {
+        throw new AppError('Old password does not match');
+      }
+
       Object.assign(user, {
         password: await this.hashProvider.generateHash(password),
       });
     }
 
-    Object.assign(user, { name, email });
     return this.usersRepository.save(user);
   }
 }
