@@ -1,4 +1,4 @@
-// import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 import UpdateProfileService from './UpdateProfileService';
@@ -30,5 +30,26 @@ describe('-> UpdateProfile', () => {
     });
     expect(updatedUser.name).toBe('Foo Bar');
     expect(updatedUser.email).toBe('foo@bar.com');
+  });
+  test('It should not be able to update user email with the same of another user', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: '123456',
+    });
+
+    const newUser = await fakeUsersRepository.create({
+      name: 'Foo Bar',
+      email: 'foo@bar.com',
+      password: '123456',
+    });
+
+    await expect(
+      updateProfile.execute({
+        user_id: newUser.id,
+        name: 'Foo Bar',
+        email: user.email,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

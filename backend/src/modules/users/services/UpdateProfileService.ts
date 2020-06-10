@@ -25,6 +25,13 @@ export default class UpdateProfile {
     if (!user) {
       throw new AppError('User not found');
     }
+
+    const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
+
+    if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
+      throw new AppError('Email already used by another user');
+    }
+
     Object.assign(user, { name, email });
     return this.usersRepository.save(user);
   }
