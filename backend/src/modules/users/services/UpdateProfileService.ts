@@ -20,7 +20,13 @@ export default class UpdateProfile {
     private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ user_id, name, email }: IRequest): Promise<User> {
+  public async execute({
+    user_id,
+    name,
+    email,
+    password,
+    old_password,
+  }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
     if (!user) {
       throw new AppError('User not found');
@@ -30,6 +36,12 @@ export default class UpdateProfile {
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
       throw new AppError('Email already used by another user');
+    }
+
+    if (password) {
+      Object.assign(user, {
+        password: await this.hashProvider.generateHash(password),
+      });
     }
 
     Object.assign(user, { name, email });
