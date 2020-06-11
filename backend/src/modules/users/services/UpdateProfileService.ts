@@ -12,7 +12,7 @@ interface IRequest {
   password?: string;
 }
 @injectable()
-export default class UpdateProfile {
+export default class UpdateProfileService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
