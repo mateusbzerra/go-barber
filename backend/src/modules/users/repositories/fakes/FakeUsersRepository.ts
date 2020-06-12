@@ -6,6 +6,14 @@ import User from '../../infra/typeorm/entities/User';
 class UsersRepository implements IUsersRepository {
   private ormRepository: User[] = [];
 
+  public async findAllProviders(except_user_id?: string): Promise<User[]> {
+    let users = this.ormRepository;
+    if (except_user_id) {
+      users = this.ormRepository.filter(user => user.id !== except_user_id);
+    }
+    return users;
+  }
+
   public async findById(id: string): Promise<User | undefined> {
     const findUser = this.ormRepository.find(user => user.id === id);
     return findUser;
