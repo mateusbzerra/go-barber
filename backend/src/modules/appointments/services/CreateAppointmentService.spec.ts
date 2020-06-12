@@ -12,7 +12,7 @@ describe('CreateAppointment', () => {
       fakeAppointmentsRepository,
     );
   });
-  test('It should be able to create a new appointment', async () => {
+  it('should be able to create a new appointment', async () => {
     const appointment = await createAppointment.execute({
       date: new Date(),
       provider_id: '123123',
@@ -21,7 +21,7 @@ describe('CreateAppointment', () => {
     expect(appointment.provider_id).toBe('123123');
   });
 
-  test('It should not be able to create two appointments at the same datetime', async () => {
+  it('should not be able to create two appointments at the same datetime', async () => {
     const appointmentDate = new Date(2020, 4, 10, 11);
     await createAppointment.execute({
       date: appointmentDate,

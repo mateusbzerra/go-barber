@@ -21,7 +21,7 @@ describe('LoginUser', () => {
       fakeHashProvider,
     );
   });
-  test('It should be able to login user', async () => {
+  it('should be able to login user', async () => {
     const user = await createUserService.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -37,7 +37,7 @@ describe('LoginUser', () => {
     expect(loginResponse.user).toEqual(user);
   });
 
-  test('It should not be able to login with non existing user', async () => {
+  it('should not be able to login with non existing user', async () => {
     await expect(
       loginUserService.execute({
         email: 'johndoe@example.com',
@@ -45,7 +45,7 @@ describe('LoginUser', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
-  test('It should not be able to login with an incorrect email/password', async () => {
+  it('should not be able to login with an incorrect email/password', async () => {
     await createUserService.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',

@@ -16,7 +16,7 @@ describe('-> UpdateUserAvatar', () => {
       fakeStorageProvider,
     );
   });
-  test('It should be able to create a new user', async () => {
+  it('should be able to create a new user', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -29,7 +29,7 @@ describe('-> UpdateUserAvatar', () => {
     });
     expect(updatedUser.avatar).toBe('avatar.jpg');
   });
-  test('It should not be able to update a non existing user', async () => {
+  it('should not be able to update a non existing user', async () => {
     await expect(
       updateUserAvatarService.execute({
         filename: 'avatar.jpg',
@@ -37,7 +37,7 @@ describe('-> UpdateUserAvatar', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
-  test('It should delete old avatar when updating new one', async () => {
+  it('should delete old avatar when updating new one', async () => {
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
 
     const user = await fakeUsersRepository.create({
