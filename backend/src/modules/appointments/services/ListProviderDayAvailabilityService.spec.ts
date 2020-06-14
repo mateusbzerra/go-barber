@@ -4,7 +4,7 @@ import ListProviderDayAvailabilityService from './ListProviderDayAvailabilitySer
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let listProviderDayAvailability: ListProviderDayAvailabilityService;
 
-describe('⚪️ ListProviderDayAvailability', () => {
+describe('-> ListProviderDayAvailability', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
     listProviderDayAvailability = new ListProviderDayAvailabilityService(
@@ -14,10 +14,12 @@ describe('⚪️ ListProviderDayAvailability', () => {
   it('should be able to list the month availability from provider', async () => {
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
+      user_id: 'user',
       date: new Date(2020, 4, 20, 14, 0, 0),
     });
     await fakeAppointmentsRepository.create({
       provider_id: 'user',
+      user_id: 'user',
       date: new Date(2020, 4, 20, 15, 0, 0),
     });
 
