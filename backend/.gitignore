@@ -6,3 +6,5 @@ build/
 tmp/*
 !tmp/.gitkeep
 coverage
+.env
+.DS_Store
