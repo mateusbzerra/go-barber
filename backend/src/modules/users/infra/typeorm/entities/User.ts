@@ -7,6 +7,8 @@ import {
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 
+import uploadConfig from '@config/upload';
+
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
@@ -27,9 +29,13 @@ class User {
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
-    return this.avatar
-      ? `${process.env.APP_API_URL}/files/${this.avatar}`
-      : null;
+    if (!this.avatar) return null;
+
+    const getTypeOfStorage = {
+      disk: `${process.env.APP_API_URL}/files/${this.avatar}`,
+      s3: `https://s3.amazonaws.com/${uploadConfig.config.aws.bucket}/${this.avatar}`,
+    };
+    return getTypeOfStorage[uploadConfig.driver];
   }
 
   @CreateDateColumn()
