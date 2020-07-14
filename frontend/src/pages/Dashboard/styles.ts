@@ -94,6 +94,9 @@ export const Section = styled.section`
     padding-bottom: 16px;
     margin-bottom: 16px;
   }
+  p {
+    color: #999591;
+  }
 `;
 
 export const Appointment = styled.div`
@@ -126,6 +129,7 @@ export const Appointment = styled.div`
       width: 56px;
       height: 56px;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     strong {
@@ -220,6 +224,7 @@ export const NextAppointments = styled.div`
       width: 80px;
       height: 80px;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     strong {
