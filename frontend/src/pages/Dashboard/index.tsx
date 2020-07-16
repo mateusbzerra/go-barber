@@ -43,8 +43,7 @@ const Dashboard: React.FC = () => {
   const [monthAvailability, setMonthAvailability] = useState<
     MonthAvailabilityItem[]
   >([]);
-
-  const { user } = useAuth();
+  const { signOut, user } = useAuth();
 
   const disabledDaysOfMonth = useMemo(() => {
     return monthAvailability
@@ -125,21 +124,17 @@ const Dashboard: React.FC = () => {
       });
   }, [selectedDate]);
 
-  const { signOut } = useAuth();
   return (
     <Container>
       <Header>
         <HeaderWrapper>
           <img src={logoImg} alt="GoBarber" />
           <Profile>
-            <img
-              src="https://avatars0.githubusercontent.com/u/17644982?s=460&u=eb3394a14934d0228207c4071cc79edf80cac825&v=4"
-              alt="Mateus Bezerra"
-            />
+            <img src={user.avatar_url} alt={user.name} />
             <div>
               <span>Bem Vindo</span>
               <Link to="/profile">
-                <strong>Mateus Bezerra</strong>
+                <strong>{user.name}</strong>
               </Link>
             </div>
           </Profile>
